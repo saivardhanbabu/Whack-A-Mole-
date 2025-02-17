@@ -1,0 +1,19 @@
+.container1{
+    outline: 20px black;
+    border-radius: 10px;
+}
+.card{
+    box-shadow: 7px 7px 20px 15px #000000;
+    border-radius: 10px;
+    background-color:transparent;
+}
+form{
+    padding:15px;
+}
+::placeholder {
+    color: white !important;
+    opacity: 1;
+  }
+  
+
+  
