@@ -11,7 +11,6 @@ userApp.use((req,res,next)=>{
     usersCollection=req.app.get('usersCollection')
     next()
 })
-
 userApp.post('/user',expressAsynHandler(async(req,res)=>{
     const usersCollectionObj = req.app.get("usersCollection");
 
