@@ -10,7 +10,7 @@
     "socket.io": "^4.8.1"
   },
   "scripts":{
-  "build":"node server.js"
+  "start":"node server.js"
   },
   "devDependencies": {
     "typescript": "^5.7.3"
