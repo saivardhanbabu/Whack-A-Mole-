@@ -2,6 +2,7 @@ const exp = require("express");
 const app = exp();
 const path = require("path");
 require("dotenv").config();
+const mongoose = require("mongoose");
 const http = require("http");
 const { Server } = require("socket.io");
 const expressAsynHandler=require('express-async-handler')
@@ -11,15 +12,26 @@ var cors = require('cors');
 app.use(cors());
 
 // MongoDB Connection
-const mongoClient = require("mongodb").MongoClient;
-mongoClient
-  .connect("mongodb://127.0.0.1:27017")
-  .then((client) => {
-    const blogDBobj = client.db("wam");
-    app.set("usersCollection", blogDBobj.collection("users"));
-    console.log("DB connection success");
-  })
-  .catch((err) => console.log("Err in DB connect", err));
+const connectDB = async () => {
+  try {
+    const conn = await mongoose.connect("mongodb+srv://saivardhanbabu1:trPphU9QlNHSgOOZ@cluster0.7fo3a.mongodb.net/", {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    console.log("✅ MongoDB Connected...");
+    const db = conn.connection.db;
+    const usersCollection = db.collection("users"); 
+
+    // Attach to app (so it can be accessed in routes)
+    app.set("usersCollection", usersCollection);
+    console.log(usersCollection)
+  } catch (error) {
+    console.error("❌ Error in DB connect:", error);
+    process.exit(1);
+  }
+};
+
+connectDB();
 
 // Import API Routes
 const userApp = require("./APIs/user-api");

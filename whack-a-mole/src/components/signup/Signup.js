@@ -15,7 +15,6 @@ function Signup() {
       score:0
     }
     let res=await axios.post('http://localhost:4000/user-api/user',userObj)
-    console.log(res.data.message)
     if(res.data.message==='User created' && userObj.password===userObj.cpassword){
       navigate("/signin")
     }
