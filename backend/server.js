@@ -4,7 +4,7 @@ const path = require("path");
 require("dotenv").config();
 const http = require("http");
 const { Server } = require("socket.io");
-
+const expressAsynHandler=require('express-async-handler')
 app.use(exp.json());
 app.use(exp.static(path.join(__dirname, '../whack-a-mole/build')));
 var cors = require('cors');
