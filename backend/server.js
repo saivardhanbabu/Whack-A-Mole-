@@ -166,7 +166,7 @@ app.use((err, req, res, next) => {
   res.send({ status: "error", message: err.message });
 });
 app.get('/',expressAsynHandler(async(req,res)=>{
-  res.json("Hello")
+  res.json({message:"Hello"})
 }))
 const port = process.env.PORT || 4000;
 server.listen(port, () => console.log(`Server running on port ${port}`));
