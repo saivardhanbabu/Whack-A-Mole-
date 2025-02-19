@@ -6,7 +6,7 @@ export const userLoginThunk = createAsyncThunk(
     'userLogin',
     async (userCred, thunkApi) => {
         try {
-            const res = await axios.post('http://localhost:4000/user-api/login', userCred);
+            const res = await axios.post('whack-a-mole-hu94.vercel.app/user-api/login', userCred);
 
             if (res.data.message === 'login success') {
                 // Store JWT token in sessionStorage

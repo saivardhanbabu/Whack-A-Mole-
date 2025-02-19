@@ -30,7 +30,7 @@ function Multiplayer() {
               score:score
             }
   
-            await axios.post("http://localhost:4000/user-api/update-score", userObj);
+            await axios.post("whack-a-mole-hu94.vercel.app/user-api/update-score", userObj);
           } catch (error) {
             console.error("Error updating score:", error);
           }
