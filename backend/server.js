@@ -9,9 +9,7 @@ app.use(exp.json());
 app.use(exp.static(path.join(__dirname, '../whack-a-mole/build')));
 var cors = require('cors');
 app.use(cors());
-app.get("/", (req, res) => {
-  res.send("Hello from Vercel!");
-});
+
 // MongoDB Connection
 const mongoClient = require("mongodb").MongoClient;
 mongoClient
@@ -160,7 +158,9 @@ io.on("connection", (socket) => {
 app.use((req, res, next) => {
   res.sendFile(path.join(__dirname, '../whack-a-mole/build/index.html'));
 });
-
+app.get("/", (req, res) => {
+  res.send("Hello from Vercel!");
+});
 // Error Handling Middleware
 app.use((err, req, res, next) => {
   res.send({ status: "error", message: err.message });
