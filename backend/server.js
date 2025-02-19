@@ -168,5 +168,5 @@ app.use((err, req, res, next) => {
 app.get('/',expressAsynHandler(async(req,res)=>{
   res.json({message:"Hello"})
 }))
-const port = process.env.PORT || 4000;
+const port = 4000;
 server.listen(port, () => console.log(`Server running on port ${port}`));
