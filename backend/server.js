@@ -24,7 +24,6 @@ const connectDB = async () => {
 
     // Attach to app (so it can be accessed in routes)
     app.set("usersCollection", usersCollection);
-    console.log(usersCollection)
   } catch (error) {
     console.error("❌ Error in DB connect:", error);
     process.exit(1);

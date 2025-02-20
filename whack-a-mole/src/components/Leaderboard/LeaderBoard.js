@@ -12,7 +12,7 @@ function LeaderBoard() {
     useEffect(() => {
         async function getLeaderBoard() {
             try {
-                const res = await axios.get("whack-a-mole-hu94.vercel.app/user-api/get-leaderboard");
+                const res = await axios.get("http://localhost:4000/user-api/get-leaderboard");
                 setUsers(res.data.payload);
             } catch (error) {
                 console.error("Error fetching leaderboard:", error);
