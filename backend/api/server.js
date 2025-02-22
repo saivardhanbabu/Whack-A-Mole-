@@ -9,7 +9,11 @@ const expressAsynHandler=require('express-async-handler')
 app.use(exp.json());
 app.use(exp.static(path.join(__dirname, '../whack-a-mole/build')));
 var cors = require('cors');
-app.use(cors());
+app.use(cors({
+  origin:"*",
+  methods:["POST","GET"],
+  credentials:true
+}));
 
 // MongoDB Connection
 const connectDB = async () => {
@@ -180,4 +184,4 @@ app.get('/',expressAsynHandler(async(req,res)=>{
   res.json({message:"Hello"})
 }))
 const port = 4000;
-server.listen(port, () => console.log(`Server running on port ${port}`));
+app.listen(port, () => console.log(`Server running on port ${port}`));
