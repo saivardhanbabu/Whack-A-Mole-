@@ -7,7 +7,7 @@ function LeaderBoard() {
 
     // Get the current user from Redux store
     let { currentUser } = useSelector((state) => state.userLogin);
-    const username = currentUser.username;
+    const username = currentUser?.username;
 
     useEffect(() => {
         async function getLeaderBoard() {
