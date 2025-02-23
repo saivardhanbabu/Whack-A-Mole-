@@ -33,7 +33,7 @@ function SinglePlayer() {
             score:score
           }
 
-          await axios.post("http://localhost:4000/user-api/update-score", userObj);
+          await axios.post("https://whack-a-mole-7.onrender.com/user-api/update-score", userObj);
         } catch (error) {
           console.error("Error updating score:", error);
         }
