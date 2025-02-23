@@ -9,11 +9,7 @@ const expressAsynHandler=require('express-async-handler')
 app.use(exp.json());
 app.use(exp.static(path.join(__dirname, '../whack-a-mole/build')));
 var cors = require('cors');
-app.use(cors({
-  origin:"*",
-  methods:["POST","GET"],
-  credentials:true
-}));
+app.use(cors());
 
 // MongoDB Connection
 const connectDB = async () => {
