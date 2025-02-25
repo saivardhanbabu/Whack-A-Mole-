@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import io from "socket.io-client";
 import axios from "axios";
+
 const socket = io("https://whack-a-mole-7.onrender.com");
 
 function Multiplayer() {
@@ -21,23 +22,24 @@ function Multiplayer() {
   const [winner, setWinner] = useState(null);
   const [opponentName, setOpponentName] = useState("");
   const [countdown, setCountdown] = useState(null);
-    useEffect(() => {
-      if (isGameOver) {
-        const updateScore = async () => {
-          try {
-            let userObj={
-              user:currentUser,
-              score:score
-            }
-  
-            await axios.post("https://whack-a-mole-7.onrender.com//user-api/update-score", userObj);
-          } catch (error) {
-            console.error("Error updating score:", error);
-          }
-        };
-        updateScore();
-      }
-    }, [isGameOver, score]);
+
+  useEffect(() => {
+    if (isGameOver) {
+      const updateScore = async () => {
+        try {
+          let userObj = {
+            user: currentUser,
+            score: score,
+          };
+          await axios.post("https://whack-a-mole-7.onrender.com/user-api/update-score", userObj);
+        } catch (error) {
+          console.error("Error updating score:", error);
+        }
+      };
+      updateScore();
+    }
+  }, [isGameOver, score]);
+
   useEffect(() => {
     if (!username) {
       navigate("/");
