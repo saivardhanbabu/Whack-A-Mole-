@@ -6,14 +6,13 @@ const mongoose = require("mongoose");
 const http = require("http");
 const { Server } = require("socket.io");
 const expressAsynHandler = require('express-async-handler');
-app.use(exp.json());
-app.use(exp.static(path.join(__dirname, '../whack-a-mole/build')));
+const cors = require('cors');
 
-// app.get('*', (req, res) => {
-//     res.sendFile(path.join(__dirname, '../whack-a-mole/build', 'index.html'));
-// });
-var cors = require('cors');
+app.use(exp.json());
 app.use(cors());
+
+// Serve static files from the React app
+app.use(exp.static(path.join(__dirname, '../whack-a-mole/build')));
 
 // MongoDB Connection
 const connectDB = async () => {
@@ -38,20 +37,25 @@ connectDB();
 
 // Import API Routes
 const userApp = require("./APIs/user-api");
-const { log } = require("console");
 app.use("/user-api", userApp);
 
+// Create HTTP server
 const server = http.createServer(app);
-const io = require("socket.io")(server, {
+
+// Initialize WebSocket server
+const io = new Server(server, {
   cors: {
-      origin: "*",
-      methods: ["GET", "POST"],
-      credentials: true
+    origin: "*",
+    methods: ["GET", "POST"],
+    credentials: true
   }
 });
 
-// Serve React App
-app.use((req, res, next) => {
+// Attach WebSocket server to app
+app.set('io', io);
+
+// Serve React App (fallback for client-side routing)
+app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../whack-a-mole/build/index.html'));
 });
 
@@ -60,5 +64,6 @@ app.use((err, req, res, next) => {
   res.send({ status: "error", message: err.message });
 });
 
-const port = 4001;
+// Start the server
+const port = process.env.PORT || 4001;
 server.listen(port, () => console.log(`Server running on port ${port}`));
