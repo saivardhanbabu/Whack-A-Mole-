@@ -14,7 +14,7 @@ function Signup() {
       ...userObj,
       score:0
     }
-    let res=await axios.post('https://whack-a-mole-7.onrender.com/user-api/user',userObj)
+    let res=await axios.post('https://whack-a-mole-server-zyja.onrender.com/user-api/user',userObj)
     if(res.data.message==='User created' && userObj.password===userObj.cpassword){
       navigate("/signin")
     }
