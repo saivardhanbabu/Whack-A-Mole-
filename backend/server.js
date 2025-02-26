@@ -7,11 +7,11 @@ const http = require("http");
 const { Server } = require("socket.io");
 const expressAsynHandler = require('express-async-handler');
 app.use(exp.json());
-app.use(exp.static(path.join(__dirname, 'whack-a-mole/build')));
+app.use(exp.static(path.join(__dirname, '../whack-a-mole/build')));
 
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../whack-a-mole/build', 'index.html'));
-});
+// app.get('*', (req, res) => {
+//     res.sendFile(path.join(__dirname, '../whack-a-mole/build', 'index.html'));
+// });
 var cors = require('cors');
 app.use(cors());
 
