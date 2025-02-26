@@ -8,6 +8,10 @@ const { Server } = require("socket.io");
 const expressAsynHandler = require('express-async-handler');
 app.use(exp.json());
 app.use(exp.static(path.join(__dirname, '../whack-a-mole/build')));
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'whack-a-mole/build', 'index.html'));
+});
 var cors = require('cors');
 app.use(cors());
 
@@ -33,7 +37,7 @@ const connectDB = async () => {
 connectDB();
 
 // Import API Routes
-const userApp = require("../APIs/user-api");
+const userApp = require("./APIs/user-api");
 const { log } = require("console");
 app.use("/user-api", userApp);
 
@@ -56,5 +60,5 @@ app.use((err, req, res, next) => {
   res.send({ status: "error", message: err.message });
 });
 
-const port = 4000;
+const port = 4001;
 server.listen(port, () => console.log(`Server running on port ${port}`));
