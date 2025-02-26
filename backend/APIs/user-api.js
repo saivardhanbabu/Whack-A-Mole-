@@ -71,6 +71,7 @@ userApp.post('/update-score', expressAsyncHandler(async (req, res) => {
     const usersCollectionObj = req.app.get('usersCollection');
     const userCred = req.body;
     await usersCollectionObj.updateOne({ username: userCred.user.username }, { $inc: { score: userCred.score } });
+    res.send({ message: "Score updated" });
 }));
 
 // Get Leaderboard
@@ -82,8 +83,11 @@ userApp.get('/get-leaderboard', expressAsyncHandler(async (req, res) => {
 
 // WebSocket route
 userApp.get('/socket', (req, res) => {
-    if (!req.app.get('io')) {
-        const io = new Server(req.app.get('server'), { cors: { origin: '*' } });
+    const server = req.app.get('server');
+    const io = req.app.get('io');
+
+    if (!io) {
+        const io = new Server(server, { cors: { origin: '*' } });
         req.app.set('io', io);
 
         let waitingPlayer = null;
