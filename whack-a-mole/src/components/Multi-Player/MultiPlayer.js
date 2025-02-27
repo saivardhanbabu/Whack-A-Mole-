@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import io from "socket.io-client";
 import axios from "axios";
 
-const socket = io("https://whack-a-mole-server-zyja.onrender.com");
+const socket = io("http://localhost:4001");
 
 function Multiplayer() {
   let navigate = useNavigate();
@@ -31,7 +31,7 @@ function Multiplayer() {
             user: currentUser,
             score: score,
           };
-          await axios.post("https://whack-a-mole-server-zyja.onrender.com/user-api/update-score", userObj);
+          await axios.post("http://localhost:4001/user-api/update-score", userObj);
         } catch (error) {
           console.error("Error updating score:", error);
         }
@@ -49,6 +49,7 @@ function Multiplayer() {
     socket.emit("joinGame", { username });
 
     socket.on("gameFound", ({ gameId, role, opponent }) => {
+      console.log("Game Found - Game ID:", gameId, "Role:", role, "Opponent:", opponent);
       setGameId(gameId);
       setRole(role);
       setOpponentName(opponent);
@@ -56,14 +57,17 @@ function Multiplayer() {
     });
 
     socket.on("countdown", ({ countdown }) => {
+      console.log("Countdown:", countdown);
       setCountdown(countdown);
     });
 
     socket.on("moleUpdated", ({ moleIndex }) => {
+      console.log("Mole Updated - Mole Index:", moleIndex);
       setMoleIndex(moleIndex);
     });
 
     socket.on("scoreUpdated", ({ player, score }) => {
+      console.log("Score Updated - Player:", player, "Score:", score);
       if (player === role) {
         setScore(score);
       } else {
@@ -72,10 +76,12 @@ function Multiplayer() {
     });
 
     socket.on("timeUpdated", ({ timeLeft }) => {
+      console.log("Time Updated - Time Left:", timeLeft);
       setTimeLeft(timeLeft); // Update timeLeft from the server
     });
 
     socket.on("gameOver", ({ winner }) => {
+      console.log("Game Over - Winner:", winner);
       setWinner(winner);
       setIsGameOver(true);
     });
@@ -92,6 +98,7 @@ function Multiplayer() {
 
   const handleClick = (index) => {
     if (index === moleIndex && !isGameOver) {
+      console.log("Mole Whacked - Mole Index:", index);
       socket.emit("score", { gameId, playerRole: role });
     }
   };

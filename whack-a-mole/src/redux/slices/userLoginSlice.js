@@ -6,7 +6,7 @@ export const userLoginThunk = createAsyncThunk(
     'userLogin',
     async (userCred, thunkApi) => {
         try {
-            const res = await axios.post('https://whack-a-mole-server-zyja.onrender.com/user-api/login', userCred);
+            const res = await axios.post('http://localhost:4001/user-api/login', userCred);
 
             if (res.data.message === 'login success') {
                 // Store JWT token in sessionStorage
